@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const postRoutes = require('./routes/posts');
 const authRoutes = require('./routes/auth');
+const commentRoutes = require('./routes/comments');
 const Post = require('./models/post');
 
 // MongoDB 연결 설정
@@ -23,6 +24,9 @@ app.use('/posts', postRoutes);
 
 // 인증 라우터 연결
 app.use('/auth', authRoutes);
+
+// 댓글 라우터 연결
+app.use('/comments', commentRoutes);
 
 // 서버 시작
 const port = 3000;

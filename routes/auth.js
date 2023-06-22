@@ -24,4 +24,27 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// 회원가입
+router.post('/signup', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // 중복된 사용자명 확인
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(409).json({ error: '이미 존재하는 사용자명입니다.' });
+    }
+
+    // 사용자 생성
+    const newUser = new User({ username, password });
+    await newUser.save();
+
+    res.json({ message: '회원가입이 완료되었습니다.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+});
+
+
 module.exports = router;
